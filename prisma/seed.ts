@@ -76,7 +76,7 @@ async function main() {
     },
   });
 
-  // Ended a week ago: eligible for a review (last day is in the past).
+  // Ended a week ago, already reviewed.
   await prisma.booking.create({
     data: {
       confirmationCode: "PASTSTAY",
@@ -86,6 +86,53 @@ async function main() {
       guests: 2,
       guestName: "Guest 3",
       guestEmail: "guest3@example.com",
+      review: {
+        create: {
+          rating: 5,
+          comment: "Wonderful stay, the rooftop terrace was unbeatable at sunset!",
+          createdAt: addDays(today, -6),
+        },
+      },
+    },
+  });
+
+  // Two more past, reviewed stays, so the admin reviews page has a spread
+  // of ratings and dates to sort/filter by.
+  await prisma.booking.create({
+    data: {
+      confirmationCode: "REVIEW02",
+      roomId: single.id,
+      checkIn: addDays(today, -20),
+      checkOut: addDays(today, -17),
+      guests: 1,
+      guestName: "Guest 6",
+      guestEmail: "guest6@example.com",
+      review: {
+        create: {
+          rating: 3,
+          comment: "Decent stay, but a bit noisy at night from the street below.",
+          createdAt: addDays(today, -16),
+        },
+      },
+    },
+  });
+
+  await prisma.booking.create({
+    data: {
+      confirmationCode: "REVIEW03",
+      roomId: double.id,
+      checkIn: addDays(today, -30),
+      checkOut: addDays(today, -27),
+      guests: 2,
+      guestName: "Guest 7",
+      guestEmail: "guest7@example.com",
+      review: {
+        create: {
+          rating: 2,
+          comment: "Room was smaller than the photos suggested, and check-in was slow.",
+          createdAt: addDays(today, -26),
+        },
+      },
     },
   });
 
@@ -123,7 +170,7 @@ async function main() {
     },
   });
 
-  console.log("Seeded 3 rooms, 2 admins, 5 bookings.");
+  console.log("Seeded 3 rooms, 2 admins, 7 bookings, 3 reviews.");
 }
 
 main()

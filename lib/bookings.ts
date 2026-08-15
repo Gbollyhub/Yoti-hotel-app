@@ -58,6 +58,33 @@ export function getBookingByCode(code: string) {
   });
 }
 
+export function listBookings() {
+  return prisma.booking.findMany({
+    include: { room: true, review: true },
+    orderBy: { checkIn: "desc" },
+  });
+}
+
+export function getBookingById(id: string) {
+  return prisma.booking.findUnique({
+    where: { id },
+    include: { room: true, dinners: true, review: true },
+  });
+}
+
+export async function cancelBookingById(id: string): Promise<Result<{ id: string }>> {
+  const booking = await prisma.booking.findUnique({ where: { id } });
+  if (!booking) {
+    return { ok: false, status: 404, error: "Booking not found" };
+  }
+  if (booking.status === "CANCELLED") {
+    return { ok: false, status: 400, error: "Booking is already cancelled" };
+  }
+
+  await prisma.booking.update({ where: { id }, data: { status: "CANCELLED" } });
+  return { ok: true, data: { id: booking.id } };
+}
+
 export async function cancelBooking(
   code: string,
 ): Promise<Result<{ id: string }>> {

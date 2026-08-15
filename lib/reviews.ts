@@ -32,3 +32,26 @@ export async function addReview(input: AddReviewInput): Promise<Result<{ id: str
 
   return { ok: true, data: { id: review.id } };
 }
+
+export type ReviewSort = "latest" | "best" | "worst";
+
+export function listReviews(options: { from?: Date | null; to?: Date | null; sort?: ReviewSort } = {}) {
+  const { from, to, sort = "latest" } = options;
+
+  const createdAt: { gte?: Date; lt?: Date } = {};
+  if (from) createdAt.gte = from;
+  if (to) createdAt.lt = new Date(to.getTime() + 24 * 60 * 60 * 1000); 
+
+  const orderBy =
+    sort === "best"
+      ? { rating: "desc" as const }
+      : sort === "worst"
+        ? { rating: "asc" as const }
+        : { createdAt: "desc" as const };
+
+  return prisma.review.findMany({
+    where: Object.keys(createdAt).length ? { createdAt } : undefined,
+    include: { booking: { include: { room: true } } },
+    orderBy,
+  });
+}
