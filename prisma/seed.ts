@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { addDays } from "date-fns";
-import bcrypt from "bcryptjs";
 import { prisma } from "../lib/prisma";
+import { hashPassword } from "../lib/password";
 
 function dateOnly(date: Date): Date {
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -43,8 +43,8 @@ async function main() {
 
   await prisma.admin.createMany({
     data: [
-      { email: "admin@yoti-hotel.com", passwordHash: await bcrypt.hash("admin1234", 10) },
-      { email: "manager@yoti-hotel.com", passwordHash: await bcrypt.hash("admin1234", 10) },
+      { email: "admin@yoti-hotel.com", passwordHash: await hashPassword("admin1234") },
+      { email: "manager@yoti-hotel.com", passwordHash: await hashPassword("admin1234") },
     ],
   });
 

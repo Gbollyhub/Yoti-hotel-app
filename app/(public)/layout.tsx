@@ -18,7 +18,10 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         {children}
       </main>
       <footer className="border-t border-black/10 px-6 py-6 text-center text-xs text-zinc-500 dark:border-white/10">
-        Yoti Hotel &mdash; 3 rooms, on the harbor.
+        Yoti Hotel &mdash; 3 rooms, on the harbor. &middot;{" "}
+        <Link href="/admin/login" className="underline underline-offset-2 hover:text-zinc-700 dark:hover:text-zinc-300">
+          Admin
+        </Link>
       </footer>
     </div>
   );
