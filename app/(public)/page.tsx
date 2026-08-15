@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/button";
 
 export default function HomePage() {
   return (
@@ -10,18 +10,12 @@ export default function HomePage() {
         </p>
       </div>
       <div className="flex flex-col gap-4 sm:flex-row">
-        <Link
-          href="/book"
-          className="rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-colors hover:opacity-90"
-        >
+        <Button variant="primary" href="/book">
           Book a room
-        </Link>
-        <Link
-          href="/booking/manage"
-          className="rounded-full border border-black/10 px-6 py-3 text-sm font-medium transition-colors hover:bg-black/[.04] dark:border-white/15 dark:hover:bg-white/[.06]"
-        >
+        </Button>
+        <Button variant="secondary" href="/booking/manage">
           Manage my booking
-        </Link>
+        </Button>
       </div>
     </div>
   );
