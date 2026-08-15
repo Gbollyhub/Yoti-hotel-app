@@ -41,7 +41,7 @@ model Booking {
   dinners          BookingDinner[]
   review           Review?
 
-  @@index([roomId, checkIn, checkOut])
+  @@index([roomId, status, checkIn, checkOut])
 }
 
 model BookingDinner {
