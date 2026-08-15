@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { isRoomAvailable } from "@/lib/availability";
 import { generateConfirmationCode } from "@/lib/confirmation-code";
 import { nightsBetween } from "@/lib/dates";
-import type { CreateBookingInput, Result } from "@/lib/types";
+import type { CreateBookingInput, Result } from "@/types";
 
 export async function createBooking(
   input: CreateBookingInput,
@@ -64,6 +64,8 @@ export function listBookings() {
     orderBy: { checkIn: "desc" },
   });
 }
+
+export type BookingListItem = Awaited<ReturnType<typeof listBookings>>[number];
 
 export function getBookingById(id: string) {
   return prisma.booking.findUnique({

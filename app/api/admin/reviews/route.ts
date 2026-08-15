@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { listReviews, type ReviewSort } from "@/lib/reviews";
+import { listReviews } from "@/lib/reviews";
+import type { ReviewSort } from "@/types";
 import { parseDateOnly } from "@/lib/dates";
 import { errorResponse } from "@/lib/http";
 

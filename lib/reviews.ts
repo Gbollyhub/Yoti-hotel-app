@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { today } from "@/lib/dates";
-import type { Result } from "@/lib/types";
+import type { Result, ReviewSort } from "@/types";
 
 export type AddReviewInput = {
   confirmationCode: string;
@@ -33,8 +33,6 @@ export async function addReview(input: AddReviewInput): Promise<Result<{ id: str
   return { ok: true, data: { id: review.id } };
 }
 
-export type ReviewSort = "latest" | "best" | "worst";
-
 export function listReviews(options: { from?: Date | null; to?: Date | null; sort?: ReviewSort } = {}) {
   const { from, to, sort = "latest" } = options;
 
@@ -55,3 +53,5 @@ export function listReviews(options: { from?: Date | null; to?: Date | null; sor
     orderBy,
   });
 }
+
+export type ReviewListItem = Awaited<ReturnType<typeof listReviews>>[number];

@@ -2,11 +2,9 @@
 
 import { Label, Radio, RadioGroup } from "@headlessui/react";
 import { Button } from "@/components/Button";
-import { useBooking, type Room } from "@/hooks/useBooking";
-
-function formatPrice(cents: number) {
-  return `$${(cents / 100).toFixed(0)}`;
-}
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { RoomCard } from "@/components/RoomCard";
+import { useBooking } from "@/hooks/useBooking";
 
 function todayString() {
   return new Date().toISOString().slice(0, 10);
@@ -62,11 +60,7 @@ export default function BookPage() {
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-8">
       <h1 className="text-3xl font-semibold tracking-tight">Book a room</h1>
 
-      {error && (
-        <p className="rounded-md border border-red-300 bg-red-50 px-4 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
-          {error}
-        </p>
-      )}
+      {error && <ErrorBanner message={error} />}
 
       {step === "dates" && (
         <form onSubmit={submitDates} className="flex flex-col gap-4">
@@ -117,26 +111,7 @@ export default function BookPage() {
               No rooms are available for those dates. Try a different range.
             </p>
           ) : (
-            rooms.map((room: Room) => (
-              <div
-                key={room.id}
-                className="flex items-center justify-between gap-4 rounded-lg border border-black/10 p-4 dark:border-white/15"
-              >
-                <div>
-                  <p className="font-medium">{room.name}</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                    {room.description}
-                  </p>
-                  <p className="mt-1 text-sm">
-                    {formatPrice(room.pricePerNightCents)}/night - fits{" "}
-                    {room.capacity} guest{room.capacity > 1 ? "s" : ""}
-                  </p>
-                </div>
-                <Button variant="secondary" onClick={() => selectRoom(room)} className="shrink-0">
-                  Select
-                </Button>
-              </div>
-            ))
+            rooms.map((room) => <RoomCard key={room.id} room={room} onSelect={selectRoom} />)
           )}
         </div>
       )}

@@ -1,39 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-export type Room = {
-  id: string;
-  name: string;
-  description: string;
-  pricePerNightCents: number;
-  capacity: number;
-};
-
-export type Dinner = {
-  date: string;
-  hasDinner: boolean;
-};
-
-export type Review = {
-  rating: number;
-  comment: string;
-  createdAt: string;
-};
-
-export type BookingDetail = {
-  id: string;
-  confirmationCode: string;
-  checkIn: string;
-  checkOut: string;
-  guests: number;
-  guestName: string;
-  guestEmail: string;
-  status: "CONFIRMED" | "CANCELLED";
-  room: Room;
-  dinners: Dinner[];
-  review: Review | null;
-};
+import type { BookingDetail } from "@/types";
 
 export function useBookingDetail(code: string) {
   const [booking, setBooking] = useState<BookingDetail | null>(null);
@@ -94,8 +62,6 @@ export function useBookingDetail(code: string) {
     );
   }
 
-  // Exposed so other hooks (e.g. useReview) can pull the booking's fresh state
-  // after their own mutation, without owning booking-fetch logic themselves.
   function refresh() {
     setRefreshIndex((n) => n + 1);
   }

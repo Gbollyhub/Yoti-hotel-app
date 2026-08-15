@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-export type Room = {
-  id: string;
-  name: string;
-  description: string;
-  pricePerNightCents: number;
-  capacity: number;
-};
-
-export type BookingStep = "dates" | "rooms" | "details" | "confirmed";
+import type { BookingStep, Room } from "@/types";
 
 export function useBooking() {
   const [step, setStep] = useState<BookingStep>("dates");

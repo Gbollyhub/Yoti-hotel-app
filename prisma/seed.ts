@@ -136,6 +136,19 @@ async function main() {
     },
   });
 
+  // Ended a few days ago, not yet reviewed: exercises the review-submission flow.
+  await prisma.booking.create({
+    data: {
+      confirmationCode: "REVIEWME",
+      roomId: single.id,
+      checkIn: addDays(today, -5),
+      checkOut: addDays(today, -2),
+      guests: 1,
+      guestName: "Guest 8",
+      guestEmail: "guest8@example.com",
+    },
+  });
+
   // Cancelled booking, should be excluded from availability checks.
   await prisma.booking.create({
     data: {
@@ -170,7 +183,7 @@ async function main() {
     },
   });
 
-  console.log("Seeded 3 rooms, 2 admins, 7 bookings, 3 reviews.");
+  console.log("Seeded 3 rooms, 2 admins, 8 bookings, 3 reviews.");
 }
 
 main()

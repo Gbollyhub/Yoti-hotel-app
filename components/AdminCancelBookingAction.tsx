@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/Button";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { CancelBookingButton } from "@/components/CancelBookingButton";
 
-export function CancelButton({ bookingId }: { bookingId: string }) {
+export function AdminCancelBookingAction({ bookingId }: { bookingId: string }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleCancel() {
-    if (!confirm("Cancel this booking? This can't be undone.")) return;
+  async function handleConfirm() {
     setError(null);
     setLoading(true);
     try {
@@ -27,14 +27,8 @@ export function CancelButton({ bookingId }: { bookingId: string }) {
 
   return (
     <div className="flex flex-col gap-2">
-      {error && (
-        <p className="rounded-md border border-red-300 bg-red-50 px-4 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
-          {error}
-        </p>
-      )}
-      <Button variant="secondary" onClick={handleCancel} disabled={loading}>
-        Cancel booking
-      </Button>
+      {error && <ErrorBanner message={error} />}
+      <CancelBookingButton onConfirm={handleConfirm} loading={loading} />
     </div>
   );
 }

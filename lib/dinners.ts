@@ -8,3 +8,5 @@ export function getDinnersForDate(date: Date) {
     orderBy: { booking: { room: { name: "asc" } } },
   });
 }
+
+export type DinnerEntry = Awaited<ReturnType<typeof getDinnersForDate>>[number];
