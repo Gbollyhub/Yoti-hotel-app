@@ -11,3 +11,61 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Room {
+  id                 String    @id @default(cuid())
+  name               String
+  description        String
+  pricePerNightCents Int
+  capacity           Int       @default(2)
+  bookings           Booking[]
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+model Booking {
+  id               String        @id @default(cuid())
+  confirmationCode String        @unique
+  roomId           String
+  room             Room          @relation(fields: [roomId], references: [id])
+  checkIn          DateTime      @db.Date
+  checkOut         DateTime      @db.Date
+  guests           Int
+  guestName        String
+  guestEmail       String
+  status           BookingStatus @default(CONFIRMED)
+  createdAt        DateTime      @default(now())
+  dinners          BookingDinner[]
+  review           Review?
+
+  @@index([roomId, checkIn, checkOut])
+}
+
+model BookingDinner {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  date      DateTime @db.Date
+  hasDinner Boolean  @default(false)
+
+  @@unique([bookingId, date])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
