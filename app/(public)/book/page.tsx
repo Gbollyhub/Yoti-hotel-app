@@ -1,7 +1,7 @@
 "use client";
 
 import { Label, Radio, RadioGroup } from "@headlessui/react";
-import { Button } from "@/components/button";
+import { Button } from "@/components/Button";
 import { useBooking, type Room } from "@/hooks/useBooking";
 
 function formatPrice(cents: number) {

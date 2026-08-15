@@ -13,3 +13,14 @@ export function parseDateOnly(value: string | null): Date | null {
 export function today(): Date {
   return dateOnly(new Date());
 }
+
+export function nightsBetween(checkIn: Date, checkOut: Date): Date[] {
+  const nights: Date[] = [];
+  let current = dateOnly(checkIn);
+  const end = dateOnly(checkOut);
+  while (current.getTime() < end.getTime()) {
+    nights.push(current);
+    current = new Date(current.getTime() + 24 * 60 * 60 * 1000);
+  }
+  return nights;
+}

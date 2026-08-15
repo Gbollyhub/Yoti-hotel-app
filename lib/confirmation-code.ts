@@ -12,7 +12,9 @@ function randomCode(): string {
   return code;
 }
 
-export async function generateConfirmationCode(tx: Prisma.TransactionClient): Promise<string> {
+export async function generateConfirmationCode(
+  tx: Prisma.TransactionClient,
+): Promise<string> {
   for (let attempt = 0; attempt < 10; attempt++) {
     const code = randomCode();
     const existing = await tx.booking.findUnique({
