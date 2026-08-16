@@ -16,20 +16,27 @@ Next.js (App Router), Prisma, and Postgres.
 # 1. Install dependencies
 npm install
 
-# 2. Start Postgres (runs on localhost:5433, not the default 5432 —
-#    picked to avoid clashing with a Postgres you might already have running)
-docker compose up -d
-
-# 3. Copy the env file (already points at the docker-compose database)
+# 2. Copy the environment file
 cp .env.example .env
 
-# 4. Apply the database schema
+# 3. Start Postgres
+#    Postgres runs on localhost:5434 to avoid clashes with other local Postgres instances.
+docker compose up -d
+
+# 4. Check that Postgres is ready
+docker compose exec db pg_isready -U hotel -d hotel
+
+# 5. Generate the Prisma Client
+npx prisma generate
+
+# 6. Apply the database migrations
 npx prisma migrate deploy
 
-# 5. Seed sample data (rooms, admin accounts, demo bookings/reviews — see below)
+# 7. Seed the database
+#    Adds sample rooms, admin accounts, demo bookings and reviews.
 npm run db:seed
 
-# 6. Start the dev server
+# 8. Start the development server
 npm run dev
 ```
 
