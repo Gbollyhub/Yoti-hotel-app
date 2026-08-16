@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-import { StatusBadge } from "@/components/StatusBadge";
-import { BookingInfoCard } from "@/components/BookingInfoCard";
-import { ReviewSummaryCard } from "@/components/ReviewSummaryCard";
-import { AdminCancelBookingAction } from "@/components/AdminCancelBookingAction";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { BookingInfoCard } from "@/components/shared/BookingInfoCard";
+import { ReviewSummaryCard } from "@/components/shared/ReviewSummaryCard";
+import { AdminCancelBookingAction } from "@/components/admin/AdminCancelBookingAction";
 import { getBookingById } from "@/lib/bookings";
 
 export default async function AdminBookingDetailPage({

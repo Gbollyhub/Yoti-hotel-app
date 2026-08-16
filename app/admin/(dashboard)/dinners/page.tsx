@@ -1,5 +1,5 @@
 import { addDays, format } from "date-fns";
-import { DinnerScheduleList } from "@/components/DinnerScheduleList";
+import { DinnerScheduleList } from "@/components/admin/DinnerScheduleList";
 import { getDinnersForDate } from "@/lib/dinners";
 import { today } from "@/lib/dates";
 

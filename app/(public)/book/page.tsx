@@ -1,9 +1,9 @@
 "use client";
 
 import { Label, Radio, RadioGroup } from "@headlessui/react";
-import { Button } from "@/components/Button";
-import { ErrorBanner } from "@/components/ErrorBanner";
-import { RoomCard } from "@/components/RoomCard";
+import { Button } from "@/components/ui/Button";
+import { ErrorBanner } from "@/components/ui/ErrorBanner";
+import { RoomCard } from "@/components/public/RoomCard";
 import { useBooking } from "@/hooks/useBooking";
 
 function todayString() {

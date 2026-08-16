@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ErrorBanner } from "@/components/ErrorBanner";
-import { CancelBookingButton } from "@/components/CancelBookingButton";
+import { ErrorBanner } from "@/components/ui/ErrorBanner";
+import { CancelBookingButton } from "@/components/ui/CancelBookingButton";
 
 export function AdminCancelBookingAction({ bookingId }: { bookingId: string }) {
   const router = useRouter();

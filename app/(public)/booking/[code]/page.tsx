@@ -1,12 +1,13 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ErrorBanner } from "@/components/ErrorBanner";
-import { BookingInfoCard } from "@/components/BookingInfoCard";
-import { CancelBookingButton } from "@/components/CancelBookingButton";
-import { DinnerToggleList } from "@/components/DinnerToggleList";
-import { ReviewSummaryCard } from "@/components/ReviewSummaryCard";
-import { ReviewForm } from "@/components/ReviewForm";
+import { ErrorBanner } from "@/components/ui/ErrorBanner";
+import { StatusBadge } from "@/components/ui/StatusBadge";
+import { BookingInfoCard } from "@/components/shared/BookingInfoCard";
+import { CancelBookingButton } from "@/components/ui/CancelBookingButton";
+import { DinnerToggleList } from "@/components/public/DinnerToggleList";
+import { ReviewSummaryCard } from "@/components/shared/ReviewSummaryCard";
+import { ReviewForm } from "@/components/public/ReviewForm";
 import { useBookingDetail } from "@/hooks/useBookingDetail";
 import { useReview } from "@/hooks/useReview";
 import { nightsBetween, today } from "@/lib/dates";
@@ -43,7 +44,7 @@ export default function BookingDetailPage() {
       <div>
         <h1 className="text-3xl font-semibold tracking-tight">Booking {booking.confirmationCode}</h1>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          {booking.status === "CANCELLED" ? "Cancelled" : "Confirmed"}
+          <StatusBadge status={booking.status} />
         </p>
       </div>
 

@@ -49,9 +49,6 @@ wipe its data volume).
   visible once the booking hasn't been reviewed yet, but stays disabled with an
   explanatory note until the stay has actually ended.
 
-Try it against the seeded data (below) without creating your own booking first, e.g.
-open `/booking/DINNER01` or `/booking/REVIEWME` directly.
-
 ### As hotel staff (admin)
 
 - Go to `/admin/login` (also linked, discreetly, in the public site's footer).
@@ -76,25 +73,17 @@ password `admin1234`.
 
 Documented here, as decisions made rather than gaps:
 
-- **Guest capacity is per room**, not a flat 1–2 for every room: the single room holds
-  1 guest, the double and suite hold up to 2.
-- **"Manage booking" and "Add review" share one confirmation-code flow** — the public
-  brief lists them as separate features, but both need the same code lookup, so they
-  live on the same `/booking/[code]` page. The review form just appears once eligible.
-- **"Each day of the booking" = each night of the stay** (check-in inclusive,
-  check-out exclusive). Dinner defaults to off for every night; guests toggle it on,
-  and can keep changing it any time before checkout.
-- **A cancelled booking is excluded entirely** — no dinner prep counted for it, and its
-  dates immediately become available for others to book.
-- **Reviews**: one per booking, only after the stay's checkout date has passed, and
-  never for a cancelled booking.
-- **Admin accounts are a single flat role** — any authenticated admin can do
-  everything (matches "single permissions, everyone is admin" in the brief). There's
-  no room-management UI; rooms are seed data only, since there are only 3 "for now"
-  and the brief doesn't ask for it.
-- **Room availability** is enforced with an application-level overlap check inside a
-  database transaction at booking-creation time (re-checked right before the write, so
-  two people can't double-book the same room in a race). 
+- **Guest capacity is per room**, The single room allows 1 guest, while the double room and suite allow up to 2.
+- **"Manage booking" and "Add review" share one confirmation-code flow** — Both features require the booking confirmation code, so they use the same /booking/[code] page. The review form is shown when the booking becomes eligible for a review.
+- **"Each day of the booking" = each night of the stay** 
+This includes the check-in date but not the check-out date. Dinner is off by default for every night, and guests can turn it on or off at any time before checkout.
+- **A cancelled booking is excluded entirely** 
+They are not included in dinner preparation, and their dates become available for new bookings immediately.
+- **Reviews**: A review can only be left after the guest has checked out, and cancelled bookings cannot be reviewed.
+- **Only One Admin Role Exists** 
+Any authenticated admin has full access
+- **Room availability** 
+The system checks for overlapping bookings inside a database transaction and checks again immediately before creating the booking. This helps prevent two guests from booking the same room at the same time.
 
 ## Architecture notes
 
@@ -106,9 +95,6 @@ Documented here, as decisions made rather than gaps:
 - **Auth**: hand-rolled JWT-in-a-cookie session (`lib/session.ts`), no auth library.
   The cookie is `httpOnly` and verified server-side by `middleware.ts` before any
   `/admin/**` page or `/api/admin/**` route responds.
-- **No automated tests** — a deliberate scope trade-off given the time box. Verified
-  manually and with ad hoc headless-browser scripts throughout development instead;
-  see the git history for what was checked at each step.
 
 ### API endpoints
 
@@ -134,6 +120,12 @@ Admin (all require the session cookie — sign in via the endpoint below first):
 | DELETE | `/api/admin/bookings/[id]` | Cancel a booking, by id |
 | GET | `/api/admin/dinners?date=` | Dinner prep list for a date (defaults to today) |
 | GET | `/api/admin/reviews?from=&to=&sort=` | Reviews, filtered and sorted (`latest`/`best`/`worst`) |
+
+## Testing
+
+There are currently no automated tests included.
+
+Given the time available for the project, I prioritised the core functionality and verified the application manually, including the main booking, cancellation, dinner, review, and admin workflows.
 
 ## Tech stack
 

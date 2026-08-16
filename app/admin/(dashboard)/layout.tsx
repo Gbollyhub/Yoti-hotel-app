@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCurrentAdmin } from "@/lib/session";
-import { LogoutButton } from "@/components/LogoutButton";
+import { LogoutButton } from "@/components/admin/LogoutButton";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const admin = await getCurrentAdmin();

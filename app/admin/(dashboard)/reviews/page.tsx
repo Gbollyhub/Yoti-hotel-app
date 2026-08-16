@@ -1,5 +1,5 @@
-import { ReviewFilterForm, SORTS } from "@/components/ReviewFilterForm";
-import { ReviewListItem } from "@/components/ReviewListItem";
+import { ReviewFilterForm, SORTS } from "@/components/admin/ReviewFilterForm";
+import { ReviewListItem } from "@/components/admin/ReviewListItem";
 import { listReviews } from "@/lib/reviews";
 import { parseDateOnly } from "@/lib/dates";
 import type { ReviewSort } from "@/types";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/Button";
 import { useAdminLogin } from "@/hooks/useAdminLogin";
 
 export default function AdminLoginPage() {

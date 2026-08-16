@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import { StatusBadge } from "@/components/StatusBadge";
+import { StatusBadge } from "@/components/ui/StatusBadge";
 import type { BookingListItem } from "@/lib/bookings";
 
 export function BookingsTable({ bookings }: { bookings: BookingListItem[] }) {

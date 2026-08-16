@@ -1,4 +1,4 @@
-import { BookingsTable } from "@/components/BookingsTable";
+import { BookingsTable } from "@/components/admin/BookingsTable";
 import { listBookings } from "@/lib/bookings";
 
 export default async function AdminBookingsPage() {

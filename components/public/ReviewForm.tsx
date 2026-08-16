@@ -1,6 +1,6 @@
 import { Label, Radio, RadioGroup } from "@headlessui/react";
-import { Button } from "@/components/Button";
-import { ErrorBanner } from "@/components/ErrorBanner";
+import { Button } from "@/components/ui/Button";
+import { ErrorBanner } from "@/components/ui/ErrorBanner";
 
 type ReviewFormProps = {
   rating: number;
